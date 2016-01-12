@@ -22,3 +22,12 @@ def score(b):
     elif i in [bytes([j]) for j in range(32)]:
       score -= 5
   return score
+  
+def guessSingleXorKey(b):
+  max_score = 0
+  for i in range(256):
+    sc = score(xor(b,genkey(bytes([i]),len(b))))
+    if sc > max_score:
+      max_score = sc
+      key = bytes([i])
+  return key
