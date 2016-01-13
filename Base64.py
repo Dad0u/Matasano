@@ -31,6 +31,13 @@ def toBase64(by):
     return out
 
 def bytesFromBase64(s):
+    if len(s)%4 == 1:
+        print("Invalid length !"
+        return None
+    elif len(s)%4 == 2:
+        s += b'=='
+    elif len(s)%4 == 3:
+        s += b'='
     out = b''
     for i,j,k,l in zip(s[0::4], s[1::4], s[2::4], s[3::4]):
         i,j,k,l = base64_dict[i],base64_dict[j],base64_dict[k],base64_dict[l]
