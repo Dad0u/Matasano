@@ -20,8 +20,16 @@ def score(b):
     elif chr(i).lower() in [i for i in range(97,123)]:
       score += .9
     elif i in [bytes([j]) for j in range(32)]:
-      score -= 5
+      score -= 10
   return score
+  
+def hamming_dist(a,b):
+  """34 µs par appel pour une longueur de 14 octets"""
+  d = xor(a,b)
+  out = 0
+  for i in d:
+    out += sum([(i>>j)%2 for j in range(0,8)])
+  return out
   
 def guessSingleXorKey(b):
   max_score = 0
