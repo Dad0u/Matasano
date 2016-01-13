@@ -14,12 +14,14 @@ def score(b):
   if type(b) == type('a'):
     b = bytes(b)
   score = 0
+  raw_bytes = [bytes([j]) for j in range(32)] + [bytes([j]) for j in range(128,256)]
+  usualchar = [i for i in range(97,123)]
   for i in b:
     if chr(i).lower() in 'etaoin shdrlu':
       score += 1
-    elif chr(i).lower() in [i for i in range(97,123)]:
+    elif chr(i).lower() in usualchar:
       score += .9
-    elif i in [bytes([j]) for j in range(32)]:
+    elif i in raw_bytes:
       score -= 10
   return score
   
