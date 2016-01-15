@@ -10,12 +10,14 @@ def genkey(key, l):
   key = key[:l]
   return key
   
+  
+raw_bytes = [bytes([j]) for j in range(32)] + [bytes([j]) for j in range(128,256)]
+usualchar = [i for i in range(97,123)]
+  
 def score(b):
   if type(b) == type('a'):
     b = bytes(b)
   score = 0
-  raw_bytes = [bytes([j]) for j in range(32)] + [bytes([j]) for j in range(128,256)]
-  usualchar = [i for i in range(97,123)]
   for i in b:
     if chr(i).lower() in 'etaoin shdrlu':
       score += 1
@@ -41,3 +43,17 @@ def guessSingleXorKey(b):
       max_score = sc
       key = bytes([i])
   return key
+
+def pkcs7_pad(b, l = 16):
+  reste = len(b)%16
+  if reste == 0:
+    return b
+  b += bytes([l - reste])*(l-reste)
+  return b
+
+def pkcs7_unpad(b):
+  l = int(b[-1])
+  if b[-l:] == b[-1:]*l:
+    return b[:-l]
+  return b
+  
