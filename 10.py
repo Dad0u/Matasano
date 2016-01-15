@@ -33,7 +33,7 @@ class AES_CBC():
 
 data = b''
 with open('10.txt', 'r') as f:
-  data = bytes(f.read(),'utf-8')
+  data = bytes(f.read().strip('\n'),"utf-8")
 
 cbc = AES_CBC('YELLOW SUBMARINE')
 
