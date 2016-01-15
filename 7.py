@@ -7,6 +7,6 @@ with open('7.txt','r') as f:
   f_b64 = ''.join(f.read().split("\n"))
 f_b = bytesFromBase64(f_b64)
 
-cipher = AES.AESCipher(key)
+cipher = AES.AESCipher(key,AES.MODE_ECB)
 
 print(cipher.decrypt(f_b))
