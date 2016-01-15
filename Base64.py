@@ -32,7 +32,7 @@ def toBase64(by):
 
 def bytesFromBase64(s):
     if len(s)%4 == 1:
-        print("Invalid length !"
+        print("Invalid length !")
         return None
     elif len(s)%4 == 2:
         s += b'=='
