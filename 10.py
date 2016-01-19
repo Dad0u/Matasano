@@ -18,7 +18,6 @@ class AES_CBC():
       out += enc
     if len(data)%16 == 0:
       return out
-      
 
   def decrypt(self, data):
     out = b''
