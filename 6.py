@@ -1,7 +1,7 @@
 from Base64 import bytesFromBase64, toBase64
 from Tools import *
 
-def guessKeyLength(data, maxLength = 50, samples = 25):
+def guessKeyLength(data, maxLength = 50, samples = 50):
   if (samples+1)*maxLength > len(data):
     print('not enough data')
     return
@@ -11,7 +11,7 @@ def guessKeyLength(data, maxLength = 50, samples = 25):
     for sample in range(1,samples):
       hd.append(hamming_dist(data[(sample-1)*keysize:sample*keysize],data[sample*keysize:(sample+1)*keysize]))
     tab.append(sum(hd)/samples/keysize)
-  print(tab)
+  #print(tab)
   return 2+tab.index(min(tab))
 
 f = open('6.txt','r')
