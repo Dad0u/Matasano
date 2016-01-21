@@ -1,10 +1,12 @@
 from Base64 import bytesFromBase64, toBase64
 from Tools import *
 
-def guessKeyLength(data, maxLength = 50, samples = 50):
+def guessKeyLength(data, maxLength = 50, samples = -1):
   if (samples+1)*maxLength > len(data):
     print('not enough data')
     return
+  if samples == -1: #Échantillonne sur le maximum de données
+    samples = len(data) // maxLength
   tab = []
   for keysize in range(2,maxLength):
     hd = []
