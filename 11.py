@@ -48,7 +48,7 @@ def detectEncryption(data):
 
 with open('10a.txt') as f:
   data = bytes(f.read(),'utf-8')
-data = bytes(64)
+#data = bytes(64)
 
 oracle = RandomEncryption(data)
 block = oracle.genblock()
