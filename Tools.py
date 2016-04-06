@@ -45,7 +45,7 @@ def guessSingleXorKey(b):
   return key
 
 def pkcs7_pad(b, l = 16):
-  reste = len(b)%16
+  reste = len(b)%l
   if reste == 0:
     return b
   b += bytes([l - reste])*(l-reste)
@@ -57,3 +57,6 @@ def pkcs7_unpad(b):
     return b[:-l]
   return b
   
+def randomKey(l = 16):
+  from random import randint
+  return bytes([randint(0,255) for i in range(l)])
