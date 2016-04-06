@@ -7,13 +7,14 @@ class AES_CBC():
   def __init__(self, key, iv = bytes(16)):
     self.cipher = AES.AESCipher(key,AES.MODE_ECB)
     self.iv = iv
+    self.length = len(iv)
 
   def encrypt(self, data):
     enc = self.iv
     out = b''
     data = pkcs7_pad(data)
-    for i in range(len(data)//16):
-      block = data[16*i:16*(i+1)]
+    for i in range(len(data)//self.length):
+      block = data[self.length*i:self.length*(i+1)]
       block = xor(block,enc)
       enc = self.cipher.encrypt(block)
       out += enc
@@ -24,8 +25,8 @@ class AES_CBC():
     enc = bytes(len(data))
     #prev = bytes(16)
     prev = self.iv
-    for i in range(len(data)//16):
-      block = data[16*i:16*(i+1)]
+    for i in range(len(data)//self.length):
+      block = data[self.length*i:self.length*(i+1)]
       dec = xor(self.cipher.decrypt(block),prev)
       out += dec
       prev = block
