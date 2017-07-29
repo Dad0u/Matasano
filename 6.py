@@ -1,35 +1,25 @@
-from Base64 import bytesFromBase64, toBase64
+from Base64 import bytesFromBase64
 from Tools import *
 
-def guessKeyLength(data, maxLength = 50, samples = -1):
-  if (samples+1)*maxLength > len(data):
-    print('not enough data')
-    return
-  if samples == -1: #Échantillonne sur le maximum de données
-    samples = len(data) // maxLength
-  tab = []
-  for keysize in range(2,maxLength):
-    hd = []
-    for sample in range(1,samples):
-      hd.append(hamming_dist(data[(sample-1)*keysize:sample*keysize],data[sample*keysize:(sample+1)*keysize]))
-    tab.append(sum(hd)/samples/keysize)
-  #print(tab)
-  return 2+tab.index(min(tab))
 
 f = open('6.txt','r')
 c_f = "".join(f.read().split("\n"))
 
 data = bytesFromBase64(c_f)
+#text = "Bonjour, ceci est un petit test pour vérifier le crack du "\
+#    "chiffrement single-Byte XOR avec une chaine encodée en UTF-8 :)\n"\
+#    "J'ai malgré tout l'impression qu'il faut une chaine suffisamment "\
+#    "longue pour lisser les irrégularités dûes à l'utilisation de la "\
+#    "distance de Hamming entre les caractères pour la détéction de "\
+#    "la longueur de la clé"
+#msg = bytes(text,'utf-8')
+#key = genkey(b'Wolo45pouet',len(msg))
+#data = xor(key,msg)
 
-length = guessKeyLength(data)
+length = guessKeyLength(data,nvalues=1)
 
-print("Longueur de la clé: "+str(length))
+print("Longueurs possible de la clé:",length)
 
-key = b''
-for l in range(length):
-  c = guessSingleXorKey(data[l::length])
-  print(c)
-  key += c
-print(key)
-print(xor(genkey(key,len(data)),data))
+keys = [guessXorKey(data,l) for l in length]
 
+print("Possible keys and text:", [(k,xor(genkey(k,len(data)),data)) for k in keys])
