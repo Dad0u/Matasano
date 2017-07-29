@@ -6,10 +6,7 @@ f_b = []
 for i in f_b64:
   f_b.append(bytes.fromhex((i)))
 
-#print(len(f_b[0]))
-
 for data in f_b:
-  for i in range(len(data)//16 - 1):
-    if data[i*16:16*(i+1)] == data[(i+1)*16:(i+2)*16]:
-      print(data)
-#cipher = AES.AESCipher(key)
+  blocks = [data[i:i+16] for i in range(0,len(data),16)]
+  if len(set(blocks)) != len(blocks):
+    print("This one contains duplicates!",data)
