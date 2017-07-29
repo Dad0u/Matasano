@@ -1,22 +1,24 @@
-def genkey(key,l):
-  while len(key) < l:
-    key += key
-  return key
+#def genkey(key,l):
+#  while len(key) < l:
+#    key += key
+#  return key
+#
+#def xor(a,b):
+#    out = b''
+#    for i,j in zip(a,b):
+#        out += bytes([i^j])
+#    return out
+#
+#def score(s):
+#  score = 0
+#  for i in s:
+#    if chr(i).lower() in 'etaoin shdrlu':
+#      score += 1
+#    elif chr(i).lower() in [i for i in range(97,123)]:
+#      score += .2
+#  return score
 
-def xor(a,b):
-    out = b''
-    for i,j in zip(a,b):
-        out += bytes([i^j])
-    return out
-
-def score(s):
-  score = 0
-  for i in s:
-    if chr(i).lower() in 'etaoin shdrlu':
-      score += 1
-    elif chr(i).lower() in [i for i in range(97,123)]:
-      score += .2
-  return score
+from Tools import xor,genkey,score
 
 with open("4.txt",'r') as f:
   f_list = f.readlines()
