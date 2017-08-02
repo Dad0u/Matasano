@@ -22,8 +22,6 @@ class AES_CBC():
 
   def decrypt(self, data):
     out = b''
-    enc = bytes(len(data))
-    #prev = bytes(16)
     prev = self.iv
     for i in range(len(data)//self.length):
       block = data[self.length*i:self.length*(i+1)]
@@ -32,18 +30,16 @@ class AES_CBC():
       prev = block
     return pkcs7_unpad(out)
 
-"""
-data = b''
-with open('10a.txt', 'r') as f:
-  data = bytes(f.read().strip('\n'),"utf-8")
-"""
-
 with open('10.txt','r') as f:
   data = bytesFromBase64("".join(f.read().split('\n')))
 cbc = AES_CBC('YELLOW SUBMARINE')
-#cbc2 = AES_CBC('YELLOW SUBMARINE', b'abcdefghijklmnop')
+#cbc2 = AES_CBC('YELLOW SUBMARINE', b'\x00'*15+b'a')
 
-print(cbc.decrypt(data))
+txt = cbc.decrypt(data)
 
+print(txt)
 
+cbc2 = AES_CBC('YELLOW SUBMARINE')
+ciph = cbc2.encrypt(txt)
 
+print("Success:",ciph == data)
