@@ -1,9 +1,8 @@
 from Crypto.Cipher import AES
-from Tools import pkcs7_pad, randomKey
-from Base64 import bytesFromBase64,toBase64
+from Tools import pkcs7_pad, random_bytes
+from Base64 import bytesFromBase64
 
-#key = bytes([45,72,2,149,213,5,43,78,230,109,54,18,138,243,83,128])
-key = randomKey()
+key = random_bytes()
 
 class AES_ECB():
 
@@ -56,7 +55,6 @@ def guessECB(encrypt, size):
     prev = curr
     res += curr
   return res
-    
 
 ecb = AES_ECB(key)
 size = guessBlockSize(ecb.encrypt)
@@ -65,6 +63,3 @@ if not isECB(ecb.encrypt,size):
   exit(-1)
 
 print(guessECB(ecb.encrypt,size))
-
-
-

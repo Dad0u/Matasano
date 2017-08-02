@@ -1,5 +1,5 @@
 from Crypto.Cipher import AES
-from Tools import randomKey, pkcs7_pad, pkcs7_unpad
+from Tools import random_bytes, pkcs7_pad, pkcs7_unpad
 
 class Oracle():
 
@@ -17,7 +17,7 @@ class Oracle():
 
   def parse(self,s):
     l = s.split('&')
-    d = dict()  
+    d = dict()
     for i in l:
       i = i.split('=')
       d[i[0]] = i[1]
@@ -32,9 +32,9 @@ class Oracle():
 
     s = strip("=",s)
     s = strip("&",s)
-    s = bytes(s,'utf-8')    
+    s = bytes(s,'utf-8')
     s = self.before + s + self.after
-    
+
     return self.encrypt(s)
 
 def findChar(encrypt, feed, goal, size):
@@ -54,7 +54,7 @@ def decompose(s):
   return out
 
 
-key = randomKey()
+key = random_bytes()
 oracle = Oracle(key)
 
 profile = oracle.profile_for('foooo@bar.com')

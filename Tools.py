@@ -11,7 +11,8 @@ def genkey(key, l):
   return key
 
 
-raw_bytes = [bytes([j]) for j in range(32)] + [bytes([j]) for j in range(128,256)]
+raw_bytes = [bytes([j]) for j in range(32)] + [bytes([j])
+    for j in range(128,256)]
 usualchar = [i for i in range(97,123)]
 
 def score(b):
@@ -60,13 +61,10 @@ def guessKeyLength(data, maxLength = 50, samples = -1, nvalues=1):
   for keysize in range(2,maxLength):
     hd = []
     for sample in range(1,samples):
-      hd.append(hamming_dist(data[(sample-1)*keysize:sample*keysize],data[sample*keysize:(sample+1)*keysize]))
+      hd.append(hamming_dist(data[(sample-1)*keysize:sample*keysize],
+        data[sample*keysize:(sample+1)*keysize]))
     tab.append(sum(hd)/samples/keysize)
-  #print(tab)
   r = [i[1]+2 for i in sorted(zip(tab,range(len(tab))))]
-  #if nvalues == 1:
-  #  return r[0]
-  #else:
   return r[:nvalues]
 
 def pkcs7_pad(b, l = 16):
@@ -82,6 +80,6 @@ def pkcs7_unpad(b):
     return b[:-l]
   return b
 
-def randomKey(l = 16):
+def random_bytes(l = 16):
   from random import randint
   return bytes([randint(0,255) for i in range(l)])
