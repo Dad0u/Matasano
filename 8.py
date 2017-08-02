@@ -1,4 +1,4 @@
-from Crypto.Cipher import AES
+#coding: utf-8
 
 with open('8.txt','r') as f:
   f_b64 = f.read().split("\n")
